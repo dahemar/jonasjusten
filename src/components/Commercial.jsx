@@ -11,7 +11,13 @@ function Commercial({ commercialPosts, onImageClick }) {
             if (!imageUrl) return null;
             
             // Handle image URL like the original
-            const processedUrl = imageUrl.startsWith('http') ? imageUrl : `/${imageUrl.replace(/^\//, '')}`;
+            let processedUrl;
+            if (imageUrl.startsWith('http')) {
+              processedUrl = imageUrl;
+            } else {
+              // For local paths, add the base path
+              processedUrl = `/jonasjusten/${imageUrl.replace(/^\//, '')}`;
+            }
             
             return (
               <div key={idx} className="blog-post" data-description={post.description || ''}>
