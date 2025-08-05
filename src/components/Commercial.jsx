@@ -1,0 +1,34 @@
+import React from 'react'
+
+function Commercial({ commercialPosts, onImageClick }) {
+  return (
+    <main className="content content-commercial">
+      <section className="works-section">
+        {/* <h2>commercial work</h2> */}
+        <div id="commercial-posts" className="blog-container">
+          {commercialPosts.map((post, idx) => {
+            const imageUrl = post.imageUrl;
+            if (!imageUrl) return null;
+            
+            // Handle image URL like the original
+            const processedUrl = imageUrl.startsWith('http') ? imageUrl : `/${imageUrl.replace(/^\//, '')}`;
+            
+            return (
+              <div key={idx} className="blog-post" data-description={post.description || ''}>
+                <img
+                  src={processedUrl}
+                  alt={post.altText || `commercial ${idx + 1}`}
+                  className="work-detail-image"
+                  style={{ cursor: 'zoom-in' }}
+                  onClick={() => onImageClick(processedUrl, post.description || '')}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default Commercial 
