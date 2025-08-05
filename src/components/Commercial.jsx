@@ -16,7 +16,7 @@ function Commercial({ commercialPosts, onImageClick }) {
               processedUrl = imageUrl;
             } else {
               // For local paths, add the base path
-              processedUrl = `/jonasjusten/${imageUrl.replace(/^\//, '')}`;
+              processedUrl = `${imageUrl.replace(/^\//, '')}`;
             }
             
             return (

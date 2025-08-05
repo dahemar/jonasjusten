@@ -59,7 +59,7 @@ function App() {
     
     // Handle local paths (como commercial/1.webp)
     if (url.startsWith('commercial/')) {
-      return `/jonasjusten/commercial/${url.split('/')[1]}`; // Convertir a ruta pública con base path
+      return `commercial/${url.split('/')[1]}`; // Convertir a ruta pública con base path
     }
     
     return false;
