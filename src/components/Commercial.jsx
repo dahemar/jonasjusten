@@ -8,7 +8,7 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
         {generalDescription && (
           <div className="general-description" style={{
             marginBottom: '30px',
-            padding: '0',
+            padding: '0 1rem',
             fontSize: '16px',
             lineHeight: '1.6',
             color: '#333',
