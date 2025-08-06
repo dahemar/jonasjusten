@@ -17,6 +17,16 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
               background: 'none',
               border: 'none'
             }}>
+              <style>
+                {`
+                  @media (min-width: 769px) {
+                    .general-description {
+                      margin-left: 16px !important;
+                      margin-top: 16px !important;
+                    }
+                  }
+                `}
+              </style>
               {generalDescription}
             </div>
           )}
