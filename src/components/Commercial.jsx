@@ -4,16 +4,16 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
   return (
     <main className="content content-commercial">
       <section className="works-section">
-        {/* Descripción general editable desde Google Sheets */}
+        {/* Descripción general desde Google Sheets */}
         {generalDescription && (
           <div className="general-description" style={{
-            marginBottom: '40px',
-            padding: '20px 0',
+            marginBottom: '30px',
+            padding: '0',
             fontSize: '16px',
             lineHeight: '1.6',
             color: '#333',
             textAlign: 'left',
-            maxWidth: '800px'
+            maxWidth: '100%'
           }}>
             {generalDescription}
           </div>

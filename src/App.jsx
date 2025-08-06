@@ -4,15 +4,15 @@ import Sidebar from './components/Sidebar'
 import Commercial from './components/Commercial'
 import './App.css'
 
-// Google Sheets API configuration
-const SPREADSHEET_ID = '1RTrPB8qONlXQG37mRzPJ8aanTlxLGLy3MeYpsyKnmBk'
-const COMMERCIAL_RANGE = 'Commercial!A2:B'
-const DESCRIPTION_RANGE = 'Commercial!C1' // Nueva celda para descripción general
-const API_KEY = 'AIzaSyAKYKOA8prGrSMgWAifEvjLJq9lUqsULzQ' // Restored correct API key
+// Google Sheets API Configuration
+const COMMERCIAL_SPREADSHEET_ID = '1RTrPB8qONlXQG37mRzPJ8aanTlxLGLy3MeYpsyKnmBk';
+const COMMERCIAL_API_KEY = 'AIzaSyAKYKOA8prGrSMgWAifEvjLJq9lUqsULzQ';
+const COMMERCIAL_RANGE = 'Commercial!C1:C1,Commercial!A2:B'; // Fetch both description and data in one call
+const COMMERCIAL_BASE_URL = 'https://sheets.googleapis.com/v4/spreadsheets/';
 
 function App() {
   const [commercialPosts, setCommercialPosts] = useState([]);
-  const [generalDescription, setGeneralDescription] = useState(''); // Nuevo estado para descripción general
+  const [generalDescription, setGeneralDescription] = useState(''); // Estado para descripción general
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedDescription, setSelectedDescription] = useState('');
 
@@ -20,32 +20,29 @@ function App() {
   useEffect(() => {
     async function fetchCommercial() {
       try {
-        // Fetch posts data
-        const postsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${COMMERCIAL_RANGE}?key=${API_KEY}`;
-        const postsResponse = await fetch(postsUrl);
-        const postsData = await postsResponse.json();
+        const url = `${COMMERCIAL_BASE_URL}${COMMERCIAL_SPREADSHEET_ID}/values:batchGet?ranges=${encodeURIComponent('Commercial!C1:C1')}&ranges=${encodeURIComponent('Commercial!A2:B')}&key=${COMMERCIAL_API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
         
-        // Fetch general description
-        const descUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${DESCRIPTION_RANGE}?key=${API_KEY}`;
-        const descResponse = await fetch(descUrl);
-        const descData = await descResponse.json();
-        
-        // Process posts data
-        if (postsData.values) {
-          const posts = postsData.values.map(row => ({
-            imageUrl: row[0] || '', // Image URL en columna A
-            description: row[1] || '', // Description en columna B
-            altText: `commercial work ${row[0]?.split('/').pop()?.split('.')[0] || ''}` // Generar alt text desde el nombre del archivo
-          })).filter(post => extractImageUrl(post.imageUrl));
+        if (data.valueRanges) {
+          // First range is C1 (general description)
+          const descriptionRange = data.valueRanges[0];
+          if (descriptionRange.values && descriptionRange.values[0] && descriptionRange.values[0][0]) {
+            setGeneralDescription(descriptionRange.values[0][0]);
+          }
           
-          setCommercialPosts(posts);
+          // Second range is A2:B (posts data)
+          const postsRange = data.valueRanges[1];
+          if (postsRange.values) {
+            const posts = postsRange.values.map(row => ({
+              imageUrl: row[0] || '', // Image URL en columna A
+              description: row[1] || '', // Description en columna B
+              altText: `commercial work ${row[0]?.split('/').pop()?.split('.')[0] || ''}` // Generar alt text desde el nombre del archivo
+            })).filter(post => extractImageUrl(post.imageUrl));
+            
+            setCommercialPosts(posts);
+          }
         }
-        
-        // Process general description
-        if (descData.values && descData.values[0] && descData.values[0][0]) {
-          setGeneralDescription(descData.values[0][0]);
-        }
-        
       } catch (error) {
         console.error('Error fetching commercial data:', error);
       }
@@ -97,7 +94,7 @@ function App() {
           <Commercial 
             commercialPosts={commercialPosts} 
             onImageClick={handleImageClick}
-            generalDescription={generalDescription} // Pass general description
+            generalDescription={generalDescription}
           />
         } />
       </Routes>
