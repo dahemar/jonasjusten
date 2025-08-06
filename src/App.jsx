@@ -8,7 +8,7 @@ import './App.css'
 const SPREADSHEET_ID = '1RTrPB8qONlXQG37mRzPJ8aanTlxLGLy3MeYpsyKnmBk'
 const COMMERCIAL_RANGE = 'Commercial!A2:B'
 const DESCRIPTION_RANGE = 'Commercial!C1' // Nueva celda para descripción general
-const API_KEY = 'AIzaSyBme4mQKxLVeqMxU3vPVT9Zj7KXwCgXjzY'
+const API_KEY = 'AIzaSyAKYKOA8prGrSMgWAifEvjLJq9lUqsULzQ' // Restored correct API key
 
 function App() {
   const [commercialPosts, setCommercialPosts] = useState([]);
