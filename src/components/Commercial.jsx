@@ -6,24 +6,16 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
       <section className="works-section">
         {/* Descripción general desde Google Sheets */}
         {generalDescription && (
-          <div className="general-description" style={{
+          <div className="general-description blog-post" style={{
             marginBottom: '30px',
-            padding: '0 1rem',
+            padding: '0', // Will be overridden by CSS classes
             fontSize: '16px',
             lineHeight: '1.6',
             color: '#333',
             textAlign: 'left',
-            maxWidth: '100%'
+            maxWidth: '100%',
+            backgroundColor: 'transparent' // Override blog-post background
           }}>
-            <style>
-              {`
-                @media (min-width: 769px) {
-                  .general-description {
-                    padding: 0 2rem !important;
-                  }
-                }
-              `}
-            </style>
             {generalDescription}
           </div>
         )}
