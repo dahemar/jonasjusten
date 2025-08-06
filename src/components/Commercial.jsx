@@ -15,6 +15,15 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
             textAlign: 'left',
             maxWidth: '100%'
           }}>
+            <style>
+              {`
+                @media (min-width: 769px) {
+                  .general-description {
+                    padding: 0 2rem !important;
+                  }
+                }
+              `}
+            </style>
             {generalDescription}
           </div>
         )}
