@@ -4,23 +4,23 @@ function Commercial({ commercialPosts, onImageClick, generalDescription }) {
   return (
     <main className="content content-commercial">
       <section className="works-section">
-        {/* Descripción general desde Google Sheets */}
-        {generalDescription && (
-          <div className="general-description work-detail-image" style={{
-            height: 'auto',
-            fontSize: '16px',
-            lineHeight: '1.6',
-            color: '#333',
-            textAlign: 'left',
-            background: 'none',
-            border: 'none'
-          }}>
-            {generalDescription}
-          </div>
-        )}
-        
         {/* <h2>commercial work</h2> */}
         <div id="commercial-posts" className="blog-container">
+          {/* Descripción general desde Google Sheets - dentro del mismo contenedor que las imágenes */}
+          {generalDescription && (
+            <div className="general-description work-detail-image" style={{
+              height: 'auto',
+              fontSize: '16px',
+              lineHeight: '1.6',
+              color: '#333',
+              textAlign: 'left',
+              background: 'none',
+              border: 'none'
+            }}>
+              {generalDescription}
+            </div>
+          )}
+          
           {commercialPosts.map((post, idx) => {
             const imageUrl = post.imageUrl;
             if (!imageUrl) return null;
